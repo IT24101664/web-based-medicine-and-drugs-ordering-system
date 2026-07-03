@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Professional</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Custom CSS matching the Dashboard Theme --- */
+
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --brand-color: #4f46e5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(241, 245, 249, 0.4);
+            z-index: -1;
+        }
+
+        /* Centered Checkout Container */
+        .checkout-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Glassmorphic Checkout Card */
+        .checkout-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: transform 0.3s ease;
+        }
+
+        .checkout-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .checkout-header {
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        /* Form Controls Styling */
+        .form-label {
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background-color: #ffffff;
+            border-color: var(--brand-color);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        .form-control[readonly] {
+            background-color: #f8fafc;
+            color: var(--brand-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Custom Success Button */
+        .btn-success-custom {
+            background-color: #10b981; /* Emerald Green */
+            color: white;
+            padding: 0.8rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+            border-radius: 0.75rem;
+            border: none;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-success-custom:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(16, 185, 129, 0.3);
+            color: white;
+        }
+
+        .icon-lock {
+            color: #10b981;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="checkout-container">
+    <div class="checkout-card">
+        <h2 class="text-center mb-4 checkout-header">
+            <i class="bi bi-shield-lock-fill icon-lock"></i>Secure Checkout
+        </h2>
+
+        <form id="paymentForm">
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Full Name</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control border-start-0 ps-0" id="customerName" placeholder="John Doe" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount (Rs.)</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 text-muted">Rs.</span>
+                    <input type="number" class="form-control border-start-0 ps-0" id="amount" required readonly>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="method" class="form-label">Payment Method</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 text-muted"><i class="bi bi-credit-card"></i></span>
+                    <select id="method" class="form-select border-start-0 ps-0" required>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Cash on Delivery">Cash on Delivery</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success-custom w-100">
+                Confirm Payment <i class="bi bi-arrow-right-circle ms-2"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Maintained your exact original JS logic
+        $.ajax({
+            url: '/api/cart',
+            method: 'GET',
+            success: function(cart) {
+                $('#amount').val(cart.totalPrice.toFixed(2));
+            },
+            error: function() {
+                // If you are previewing this in the canvas without a backend, this alert will pop up.
+                alert('Could not fetch cart total. Please go back to your cart.');
+                $('#amount').val('0.00');
+            }
+        });
+
+        $('#paymentForm').on('submit', function(e) {
+            e.preventDefault();
+            const paymentData = {
+                customerName: $('#customerName').val(),
+                amount: parseFloat($('#amount').val()),
+                method: $('#method').val(),
+                paymentDate: new Date().toISOString().split('T')[0] // Today's date
+            };
+
+            $.ajax({
+                url: '/payments/process',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(paymentData),
+                success: function(response) {
+                    alert(response);
+                    $.ajax({ url: '/api/cart/clear', method: 'DELETE' });
+                    window.location.href = '/products.html'; // Redirect to products page
+                },
+                error: function(xhr) {
+                    alert(`Payment failed: ${xhr.responseText}`);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

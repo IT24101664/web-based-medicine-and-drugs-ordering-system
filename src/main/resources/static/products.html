@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - MediCare+ | Professional</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Custom CSS for Glassmorphism Theme --- */
+
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --brand-color: #4f46e5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 3rem;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(241, 245, 249, 0.4);
+            z-index: -1;
+        }
+
+        .container-custom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Glassmorphic Panels */
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            border-radius: 1.25rem;
+        }
+
+        /* Header Styling */
+        .header {
+            padding: 2rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin-bottom: 0;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Custom Buttons */
+        .btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary-custom { background-color: var(--brand-color); color: white; }
+        .btn-primary-custom:hover { background-color: #4338ca; color: white; }
+
+        .btn-success-custom { background-color: #10b981; color: white; }
+        .btn-success-custom:hover { background-color: #059669; color: white; }
+
+        .btn-danger-custom { background-color: #ef4444; color: white; }
+        .btn-danger-custom:hover { background-color: #dc2626; color: white; }
+
+        /* Search Section & Filters */
+        .search-section {
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--brand-color);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: var(--brand-color);
+            color: white;
+            border-color: var(--brand-color);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Products Grid (CSS applies to JS generated cards) */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .product-name { font-weight: 700; font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--text-main); }
+        .product-price { font-size: 1.5rem; font-weight: 700; color: var(--brand-color); margin-top: auto; }
+
+        /* Cart Icon Styling */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            padding: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Cart Modal Styling */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-modal.active {
+            display: flex;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cart-modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(0);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cart-modal-content h4 {
+            font-weight: 700;
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #cartTotal {
+            color: var(--brand-color);
+            font-size: 1.4rem;
+        }
+
+        /* Cart Items container scroll if too many items */
+        #cartItemsContainer {
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Custom scrollbar for cart */
+        #cartItemsContainer::-webkit-scrollbar { width: 6px; }
+        #cartItemsContainer::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        #cartItemsContainer::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+    </style>
+</head>
+<body>
+<div class="container-custom">
+
+    <!-- Header Section -->
+    <div class="header glass-panel">
+        <div>
+            <h1><i class="bi bi-heart-pulse-fill text-danger me-2"></i>MediCare+ Products</h1>
+        </div>
+        <div class="d-flex align-items-center gap-4">
+            <div class="cart-icon" onclick="openCartModal()">
+                <i class="bi bi-cart3 fs-3" style="color: var(--brand-color);"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <a href="/logout" class="btn-custom btn-danger-custom text-decoration-none">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Search and Filters Section -->
+    <div class="search-section glass-panel">
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search medicines by name..." onkeypress="handleEnterKey(event)">
+            <button class="btn-custom btn-primary-custom" onclick="searchProducts()">
+                <i class="bi bi-search"></i> Search
+            </button>
+            <button class="btn-custom btn-secondary-custom" style="background-color: #64748b; color: white;" onclick="fetchProducts()">
+                <i class="bi bi-arrow-clockwise"></i> Show All
+            </button>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="category-filters">
+            <button class="category-btn active" onclick="filterData('All')">All</button>
+            <button class="category-btn" onclick="filterData('Available')">Available Only</button>
+            <button class="category-btn" onclick="filterData('Category', 'Antibiotics')">Antibiotics</button>
+            <button class="category-btn" onclick="filterData('Category', 'Pain Relief')">Pain Relief</button>
+            <button class="category-btn" onclick="filterData('Category', 'Vitamins')">Vitamins</button>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<!-- Cart Modal -->
+<div class="cart-modal" id="cartModal">
+    <div class="cart-modal-content">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4><i class="bi bi-cart-check-fill text-primary"></i> Your Shopping Cart</h4>
+            <button type="button" class="btn-close" onclick="closeCartModal()"></button>
+        </div>
+        <hr class="opacity-25 mb-4">
+
+        <!-- Cart items injected here -->
+        <div id="cartItemsContainer"></div>
+
+        <hr class="opacity-25 mt-4">
+        <div class="mt-3">
+            <div class="d-flex justify-content-between align-items-center fs-5 fw-bold mb-4">
+                <span>Total Amount:</span>
+                <span id="cartTotal">Rs. 0.00</span>
+            </div>
+            <div class="d-flex gap-3 mt-3">
+                <button class="btn-custom btn-danger-custom w-50" onclick="clearCart()">
+                    <i class="bi bi-trash"></i> Clear Cart
+                </button>
+                <a href="checkout.html" class="btn-custom btn-success-custom w-50 text-decoration-none">
+                    Checkout <i class="bi bi-arrow-right-circle ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- External JS file handling functionality remains untouched -->
+<script src="/js/ProductAvailabilityCustomer.js"></script>
+
+<script>
+    // Just a small aesthetic addition:
+    // This code snippet handles making the clicked category button look 'active'
+    // while keeping your original logic intact.
+    $(document).ready(function() {
+        $('.category-btn').on('click', function() {
+            $('.category-btn').removeClass('active');
+            $(this).addClass('active');
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expiry Alerts | Professional</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Custom CSS matching the Dashboard Theme --- */
+
+        :root {
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --brand-color: #4f46e5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding-bottom: 3rem;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(241, 245, 249, 0.4);
+            z-index: -1;
+        }
+
+        /* Top Header Styling with Glassmorphism */
+        .dashboard-header {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 2rem;
+            border-radius: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-titles h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            color: var(--text-main);
+        }
+
+        .header-titles p.subtitle {
+            color: var(--text-muted);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Action Buttons */
+        .btn-custom {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.6rem 1.2rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary-custom {
+            background-color: var(--brand-color);
+            color: white;
+        }
+        .btn-primary-custom:hover { background-color: #4338ca; color: white;}
+
+        /* Glassmorphic Table Card */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 1.5rem;
+            border-radius: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+        }
+
+        /* Custom Table Styling to fit the glass look */
+        .table-glass {
+            --bs-table-bg: transparent;
+            --bs-table-color: var(--text-main);
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .table-glass thead th {
+            background-color: rgba(255, 255, 255, 0.4);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+            color: var(--text-main);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+        }
+
+        .table-glass tbody td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .table-glass tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        .table-glass tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Small action buttons in table */
+        .btn-sm-custom {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+            border-radius: 0.4rem;
+            font-weight: 500;
+        }
+
+        /* Custom Badge */
+        .badge-warning-custom {
+            background-color: #f59e0b;
+            color: white;
+            padding: 0.5em 0.8em;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .badge-danger-custom {
+            background-color: #ef4444;
+            color: white;
+            padding: 0.5em 0.8em;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container-xl">
+
+    <!-- Header Section -->
+    <div class="dashboard-header">
+        <div class="header-titles">
+            <h1>Expiry Alerts</h1>
+            <p class="subtitle">Manage products nearing their expiry date</p>
+        </div>
+        <div class="header-actions">
+            <a href="admin-dashboard.html" class="btn btn-custom btn-primary-custom">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="glass-card">
+        <div class="table-responsive">
+            <table class="table table-glass">
+                <thead>
+                <tr>
+                    <th>Alert ID</th>
+                    <th>Product ID</th>
+                    <th>Message</th>
+                    <th>Days Left</th>
+                    <th>Generated At</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="alertsTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        fetchAlerts();
+    });
+
+    function fetchAlerts() {
+        $.ajax({
+            url: '/api/alerts/pending',
+            method: 'GET',
+            success: function(alerts) {
+                const tableBody = $('#alertsTableBody');
+                tableBody.empty();
+
+                if (alerts.length === 0) {
+                    tableBody.html('<tr><td colspan="6" class="text-center text-muted py-4">No pending alerts.</td></tr>');
+                    return;
+                }
+
+                alerts.forEach(alert => {
+                    // Reverted back to your original date formatting
+                    const generatedDate = new Date(alert.alertGeneratedAt).toLocaleString();
+
+                    // Maintained the professional badge UI for the table
+                    const badgeClass = alert.daysUntilExpiry <= 0 ? 'badge-danger-custom' : 'badge-warning-custom';
+                    const daysText = alert.daysUntilExpiry <= 0 ? 'Expired' : `${alert.daysUntilExpiry} days`;
+
+                    tableBody.append(`
+                        <tr>
+                            <td class="fw-bold text-muted">#${alert.id}</td>
+                            <td class="fw-semibold">${alert.productId}</td>
+                            <td>${alert.message}</td>
+                            <td><span class="badge ${badgeClass}">${daysText}</span></td>
+                            <td class="text-muted small">${generatedDate}</td>
+                            <td class="text-end">
+                                <!-- Discount button removed, keeping only the original Remove button with new style -->
+                                <button class="btn btn-sm btn-danger btn-sm-custom" onclick="removeStock(${alert.id})">
+                                    <i class="bi bi-trash-fill"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    `);
+                });
+            }
+        });
+    }
+
+    // Your exact original JavaScript action for removeStock
+    function removeStock(alertId) {
+        if (!confirm('Are you sure you want to remove this item from stock? This action cannot be undone.')) {
+            return;
+        }
+        $.ajax({
+            url: `/api/alerts/remove/${alertId}`,
+            method: 'DELETE',
+            success: function() {
+                alert('Item removed from stock successfully.');
+                fetchAlerts();
+            },
+            error: function() { alert('Failed to remove item.'); }
+        });
+    }
+</script>
+</body>
+</html>
